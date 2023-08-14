@@ -16,7 +16,19 @@ export const contactSlice = createSlice({
     initialState,
     reducers: {
         addContact: (state, action) => {
-            return void (state.contacts.push(action.payload));
+            let isExist = false;
+
+            state.contacts.map((contact) => {
+                if (contact.name === action.payload.name) {
+                    alert(`${action.payload.name} is already exist in contacts list!!!`);
+                    isExist = true;
+                    return;
+                }
+            })
+
+            if (!isExist) {
+                return void (state.contacts.push(action.payload));
+            }
         },
         deleteContact: (state, action) => {
             let newContacts = state.contacts.filter((el) => el.id !== action.payload);
