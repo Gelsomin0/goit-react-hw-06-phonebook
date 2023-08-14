@@ -21,9 +21,10 @@ export const contactSlice = createSlice({
             state.contacts.map((contact) => {
                 if (contact.name === action.payload.name) {
                     alert(`${action.payload.name} is already exist in contacts list!!!`);
-                    isExist = true;
-                    return;
+                    return isExist = true;
                 }
+
+                return contact;
             })
 
             if (!isExist) {
