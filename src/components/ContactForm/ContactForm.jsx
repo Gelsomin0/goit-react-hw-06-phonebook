@@ -1,11 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactSlice';
 import { useState } from 'react';
 import css from './ContactForm.module.css';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
+import { getContactList } from 'redux/contactSlice';
 
 export const ContactForm = () => {
     const dispatch = useDispatch();
+    const contactList = useSelector(getContactList);
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 
@@ -23,14 +25,27 @@ export const ContactForm = () => {
 
     const checkNewContact = (e) => {
         e.preventDefault();
-
+        
+        let isExist = false;
         const newContact = {
             id: nanoid(),
             name,
             number,
         }
 
-        dispatch(addContact(newContact));
+        contactList.map((contact) => {
+            if (contact.name === newContact.name) {
+                alert(`${newContact.name} is already exist in contacts list!!!`);
+                return isExist = true;
+            }
+
+            return contact;
+        })
+
+        if (!isExist) {
+            dispatch(addContact(newContact));    
+        }
+        
         setName('');
         setNumber('');
     }

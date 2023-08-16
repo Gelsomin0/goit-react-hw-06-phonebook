@@ -18,20 +18,7 @@ export const contactSlice = createSlice({
     initialState,
     reducers: {
         addContact: (state, action) => {
-            let isExist = false;
-
-            state.contacts.map((contact) => {
-                if (contact.name === action.payload.name) {
-                    alert(`${action.payload.name} is already exist in contacts list!!!`);
-                    return isExist = true;
-                }
-
-                return contact;
-            })
-
-            if (!isExist) {
-                return void (state.contacts.push(action.payload));
-            }
+            return void (state.contacts.push(action.payload));
         },
         deleteContact: (state, action) => {
             let newContacts = state.contacts.filter((el) => el.id !== action.payload);
@@ -46,5 +33,5 @@ const persistConfig = {
 }
 
 export const contacsReducer = persistReducer(persistConfig,  contactSlice.reducer)
-
 export const { addContact, deleteContact } = contactSlice.actions;
+export const getContactList = state => state.contact.contacts;
